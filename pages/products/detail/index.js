@@ -22,7 +22,12 @@ const Page = () => {
   }
   return (
     <Stack marginTop="20px">
-      <ProductCard />
+      <ProductCard
+        onClick={() => {
+          const message = `Ürün hakkında bilgi alabilir miyim ${window.location.href}`;
+          window.open(`https://wa.me/905332321455?text=${message}`, "_blank");
+        }}
+      />
     </Stack>
   );
 };
