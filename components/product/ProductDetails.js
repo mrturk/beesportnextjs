@@ -48,7 +48,11 @@ const ProductDetails = ({
             <Stack>{productDescription}</Stack>
             <Stack> {`${price} ₺`}</Stack>
             <Stack>
-              <Button sx={{ color: "white" }} onClick={onClick}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "black", color: "white" }}
+                onClick={onClick}
+              >
                 Ürün Hakkında Bilgi Al
               </Button>
             </Stack>
