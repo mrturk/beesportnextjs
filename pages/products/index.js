@@ -11,7 +11,7 @@ import ProductCard from "../../components/product/ProductCard";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
-  padding: theme.spacing(2),
+
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
@@ -33,7 +33,11 @@ const Page = () => {
   }
 
   return (
-    <Stack marginTop="20px">
+    <Stack
+      sx={{
+        paddingTop: "20px",
+      }}
+    >
       <Grid container flex={1} spacing={{ xs: 2, md: 2 }}>
         {Array.from(Array(20)).map((_, index) => (
           <Grid item xs={12} md={4} lg={4} key={index}>
