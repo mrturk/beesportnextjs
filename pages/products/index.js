@@ -46,7 +46,6 @@ const Page = () => {
                 router.push({
                   pathname: "/products/detail",
                   query: {
-                    productDetails: "test",
                     productId: index,
                   },
                 });

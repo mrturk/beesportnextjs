@@ -8,16 +8,15 @@ import ProductDetails from "../../../components/product/ProductDetails";
 const Page = () => {
   const router = useRouter();
 
-  const { productDetails, productId } = router.query;
+  const { productId } = router.query;
 
   useEffect(() => {
-    if (productDetails && productId) {
+    if (productId) {
       console.log(productId);
-      console.log(productDetails);
     }
-  }, [productDetails, productId]);
+  }, [productId]);
 
-  if (!productDetails) {
+  if (!productId) {
     return <>404 not found</>;
   }
   return (
