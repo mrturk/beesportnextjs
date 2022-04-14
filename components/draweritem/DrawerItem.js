@@ -1,6 +1,7 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Collapse,
+  Divider,
   List,
   ListItemButton,
   ListItemText,
@@ -32,24 +33,28 @@ const DrawerItem = ({ text, data }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       {Array.from(Array(data)).map((_, index) => (
-        <Collapse key={index} in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton
-              onClick={() => {
-                router.push({
-                  pathname: "/products",
-                  query: {
-                    productDetails: text,
-                    productId: index,
-                  },
-                });
-              }}
-              sx={{ pl: 4, color: "white" }}
-            >
-              <ListItemText primary={index} />
-            </ListItemButton>
-          </List>
-        </Collapse>
+        <>
+          <Collapse key={index} in={open} timeout="auto" unmountOnExit>
+            <Divider sx={{ borderColor: "#0000006e" }} />
+            <List component="div" disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  router.push({
+                    pathname: "/products",
+                    query: {
+                      productDetails: text,
+                      productId: index,
+                    },
+                  });
+                }}
+                sx={{ pl: 4, color: "white" }}
+              >
+                <ListItemText primary={index} />
+              </ListItemButton>
+            </List>
+            <Divider sx={{ borderColor: "#0000006e" }} />
+          </Collapse>
+        </>
       ))}
     </Stack>
   );

@@ -3,6 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   Avatar,
   Button,
+  Divider,
   Drawer,
   Stack,
   Typography,
@@ -150,11 +151,14 @@ const NavBar = ({ position = "fixed" }) => {
             </Typography>
           </Stack>
           {Array.from(Array(5)).map((_, index) => (
-            <DrawerItem
-              key={index}
-              text={index}
-              data={Math.floor(Math.random() * 11) + 1}
-            />
+            <>
+              <Divider />
+              <DrawerItem
+                key={index}
+                text={index}
+                data={Math.floor(Math.random() * 11) + 1}
+              />
+            </>
           ))}
         </Drawer>
       )}
