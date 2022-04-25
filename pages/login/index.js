@@ -1,9 +1,13 @@
 import { Button, Stack, TextField } from "@mui/material";
+import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   return (
     <Stack
@@ -53,12 +57,20 @@ const Login = () => {
         </Stack>
         <Stack>
           <Button
-            onClick={() => {
+            onClick={async () => {
               const value = {
                 username: username,
                 password: password,
               };
-              console.log(value);
+              const loginResponse = await axios.post(
+                "http://api.beesportwear.com/api/User/login",
+                value
+              );
+              if (loginResponse.data) {
+                console.log(value);
+                sessionStorage.setItem("userInfo", JSON.stringify(value));
+                await router.push("/admin");
+              }
             }}
             sx={{
               boxShadow:

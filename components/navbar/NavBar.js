@@ -13,19 +13,45 @@ import {
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
+import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DrawerItem from "../draweritem/DrawerItem";
 import NavBarItem from "../navbaritem/NavBarItem";
 
 const NavBar = ({ position = "fixed" }) => {
   const [open, setOpen] = useState(false);
+  const [productClass, setProductClass] = useState([]);
 
   const theme = useTheme();
 
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const router = useRouter();
+
+  const getData = useCallback(async () => {
+    const response = await axios.get(
+      "http://api.beesportwear.com/api/Product/api/Product/getProductClass"
+    );
+
+    response.data.map(async (element, index) => {
+      const responseTest = await axios.get(
+        "http://api.beesportwear.com/api/Product/api/Product/getProductTypeById?id=" +
+          element.id
+      );
+      const data = [{ ...element, type: [...responseTest.data] }];
+
+      setProductClass((productClass) => [...productClass, ...data]);
+    });
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
+  useEffect(() => {
+    console.log(productClass);
+  }, [productClass]);
 
   return (
     <AppBar sx={{ backgroundColor: "black" }} position={position}>
@@ -67,12 +93,8 @@ const NavBar = ({ position = "fixed" }) => {
         )}
         {isDesktop && (
           <Stack flexDirection="row">
-            {Array.from(Array(5)).map((_, index) => (
-              <NavBarItem
-                key={index}
-                text={index}
-                data={Math.floor(Math.random() * 11) + 1}
-              />
+            {productClass.map((item, index) => (
+              <NavBarItem key={index} text={item.class_type} data={item.type} />
             ))}
           </Stack>
         )}
@@ -150,14 +172,10 @@ const NavBar = ({ position = "fixed" }) => {
               BeeSportWear
             </Typography>
           </Stack>
-          {Array.from(Array(5)).map((_, index) => (
+          {productClass.map((item, index) => (
             <>
               <Divider />
-              <DrawerItem
-                key={index}
-                text={index}
-                data={Math.floor(Math.random() * 11) + 1}
-              />
+              <DrawerItem key={index} text={item.class_type} data={item.type} />
             </>
           ))}
         </Drawer>
